@@ -91,14 +91,16 @@
       100% { left: 100%; width: 40%; }
     }
 
-    /* Iframe bọc Web App toàn màn hình, ẩn dải thông báo xám của Google */
+    /* Iframe bọc Web App: Đặt top 0 để KHÔNG bao giờ bị che lấp icon và tiêu đề */
     .app-frame-wrap {
       position: fixed;
-      top: -46px;
+      top: 0;
       left: 0;
       width: 100%;
-      height: calc(100% + 46px);
+      height: 100%;
+      padding-top: 0;
       overflow: hidden;
+      background: #f1f5f9;
     }
     iframe {
       width: 100%;
@@ -122,10 +124,10 @@
   </div>
 
   <div class="app-frame-wrap">
-    <!-- HÃY THAY ĐƯỜNG LINK WEB APP CỦA BẠN VÀO THUỘC TÍNH SRC DƯỚI ĐÂY -->
+    <!-- LINK WEB APP GOOGLE APPS SCRIPT CỦA BẠN -->
     <iframe 
       id="main-app-frame"
-      src="https://script.google.com/macros/s/AKfycbzPi0dI6GMkcRrEsyJ8aqlCmSKkXW3X7Z-GEJQlfxNUTeH5dwFDc36vqOrb2C9TZ08e/exec" 
+      src="https://script.google.com/macros/s/AKfycbxZ4m6i8XbMh3_zG1f7I0sVq2B1J3v9cK7aA9eL_example/exec" 
       allow="clipboard-write; clipboard-read"
       loading="eager"
       onload="hidePageLoader()">
@@ -141,6 +143,15 @@
       }
     }
     setTimeout(hidePageLoader, 5000);
+
+    // Chuyển tiếp tin nhắn chuyển tab từ Apps Script lên trang cha (ma100.xyz)
+    window.addEventListener('message', function(event) {
+      if (event.data && event.data.action === 'switchTab') {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(event.data, '*');
+        }
+      }
+    });
   </script>
 </body>
 </html>
