@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tra Cứu Đơn Hàng Vận Chuyển</title>
+
+  <!-- Preconnect Google Apps Script -->
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="dns-prefetch" href="https://script.google.com">
+  <link rel="dns-prefetch" href="https://script.googleusercontent.com">
+
+  <link rel="icon" href="https://deo.shopeemobile.com/chem/desktop/vi/favicon.ico" type="image/x-icon">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Màn hình tải trang nhanh */
+    #page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    #page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loader-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 28px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+    }
+    .loader-title {
+      margin-top: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .loader-sub {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .loader-bar-wrap {
+      width: 150px;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      margin-top: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+    .loader-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 40%;
+      background: #2563eb;
+      border-radius: 10px;
+      animation: loading 1.2s infinite ease-in-out;
+    }
+    @keyframes loading {
+      0% { left: -40%; width: 40%; }
+      50% { left: 30%; width: 60%; }
+      100% { left: 100%; width: 40%; }
+    }
+
+    /* Iframe bọc Web App toàn màn hình, ẩn dải thông báo xám của Google */
+    .app-frame-wrap {
+      position: fixed;
+      top: -46px;
+      left: 0;
+      width: 100%;
+      height: calc(100% + 46px);
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Màn hình chờ -->
+  <div id="page-loader">
+    <div class="loader-icon">🚚</div>
+    <div class="loader-title">Tra Cứu Đơn Hàng Vận Chuyển</div>
+    <div class="loader-sub">Đang kết nối hệ thống tra cứu...</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <div class="app-frame-wrap">
+    <!-- HÃY THAY ĐƯỜNG LINK WEB APP CỦA BẠN VÀO THUỘC TÍNH SRC DƯỚI ĐÂY -->
+    <iframe 
+      id="main-app-frame"
+      src="https://script.google.com/macros/s/AKfycbzPi0dI6GMkcRrEsyJ8aqlCmSKkXW3X7Z-GEJQlfxNUTeH5dwFDc36vqOrb2C9TZ08e/exec" 
+      allow="clipboard-write; clipboard-read"
+      loading="eager"
+      onload="hidePageLoader()">
+    </iframe>
+  </div>
+
+  <script>
+    function hidePageLoader() {
+      const loader = document.getElementById('page-loader');
+      if (loader) {
+        loader.classList.add('hidden');
+        setTimeout(() => { loader.style.display = 'none'; }, 350);
+      }
+    }
+    setTimeout(hidePageLoader, 5000);
+  </script>
+</body>
+</html>
